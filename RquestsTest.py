@@ -1,12 +1,25 @@
-
 import logging
 import requests
 from bs4 import BeautifulSoup
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
-web_url = 'http://weixin.sogou.com/weixin?type=2&ie=utf8&query=%E7%BE%8E%E5%9B%BD&tsn=5&ft=2018-04-01&et=2018-04-05&interation=&wxid=&usip='
 
-r=requests.get(web_url)
-r.encoding='utf-8'
-print(r.text)
+def get_html_text_split_by_tab(url):
+    r = requests.get(url)
+    r.encoding = 'utf-8'
+    soup = BeautifulSoup(r.text, 'lxml')
+    for script in soup(["script", "style"]):
+        script.extract()
+    soup.title.extract()
+    text = soup.get_text()
+    lines = (line.strip() for line in text.splitlines())
+    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+    text = '\t'.join(chunk for chunk in chunks if chunk)
+    texts = text.split('\t')
+    result = ''
+    for item in texts:
+        if len(item) < 20:
+            continue
+        result += item
+    return result
