@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
-web_url = 'https://mp.weixin.qq.com/s?src=11&timestamp=1524792154&ver=841&signature=3F4aWex8Rv*iK6E5QktYDiof9GCPg3smsM9WixcA9Noq8WLLtwEiy4-CtZe*ZauH9q6b11FNoLhUyjHtNLBJsLPmhV9HmvAWaOeSCVhtd5cZmWXZHudoRcLvEwuJOM2n&new=1'
+web_url = 'http://weixin.sogou.com/weixin?type=2&ie=utf8&query=%E7%BE%8E%E5%9B%BD&tsn=5&ft=2018-04-01&et=2018-04-05&interation=&wxid=&usip='
 
 
 def get_html_text_split_by_tab(url):
