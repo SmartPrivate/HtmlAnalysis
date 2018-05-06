@@ -1,7 +1,7 @@
 import logging
 import requests, re
 from bs4 import BeautifulSoup
-import pachong
+
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -15,6 +15,3 @@ r = requests.get(web_url, headers=header)
 r.encoding = 'utf-8'
 soup = BeautifulSoup(r.text, 'lxml')
 result = soup.find_all('a', uigs=re.compile('article_title_*'))
-for item in result:
-    text=pachong.get_html_text_split_by_tab(item['href'])
-    print(text.split('\t'))
