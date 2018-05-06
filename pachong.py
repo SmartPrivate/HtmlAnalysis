@@ -10,6 +10,7 @@ web_url = 'http://weixin.sogou.com/weixin?type=2&ie=utf8&query=%E7%BE%8E%E5%9B%B
 
 def get_html_text_split_by_tab(url):
     r = requests.get(url)
+    r.encoding='utf-8'
     soup = BeautifulSoup(r.text, 'lxml')
     for script in soup(["script", "style"]):
         script.extract()
@@ -19,6 +20,3 @@ def get_html_text_split_by_tab(url):
     text = '\t'.join(chunk for chunk in chunks if chunk)
     return text
 
-
-result=get_html_text_split_by_tab(web_url).split('\t')
-print(result)
