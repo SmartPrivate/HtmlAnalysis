@@ -1,25 +1,20 @@
 import logging
-import requests
+import requests, re
 from bs4 import BeautifulSoup
+import pachong
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
+web_url = 'http://weixin.sogou.com/weixin?type=2&ie=utf8&query=%E7%BE%8E%E5%9B%BD&tsn=5&ft=2018-04-01&et=2018-04-05&interation=&wxid=&usip='
 
-def get_html_text_split_by_tab(url):
-    r = requests.get(url)
-    r.encoding = 'utf-8'
-    soup = BeautifulSoup(r.text, 'lxml')
-    for script in soup(["script", "style"]):
-        script.extract()
-    soup.title.extract()
-    text = soup.get_text()
-    lines = (line.strip() for line in text.splitlines())
-    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    text = '\t'.join(chunk for chunk in chunks if chunk)
-    texts = text.split('\t')
-    result = ''
-    for item in texts:
-        if len(item) < 20:
-            continue
-        result += item
-    return result
+header = {
+    'Referer': 'http://weixin.sogou.com/weixin?type=2&s_from=input&query=%E7%BE%8E%E5%9B%BD&ie=utf8&_sug_=n&_sug_type_=',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'
+}
+r = requests.get(web_url, headers=header)
+r.encoding = 'utf-8'
+soup = BeautifulSoup(r.text, 'lxml')
+result = soup.find_all('a', uigs=re.compile('article_title_*'))
+for item in result:
+    text=pachong.get_html_text_split_by_tab(item['href'])
+    print(text.split('\t'))
