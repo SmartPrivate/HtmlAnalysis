@@ -2,7 +2,7 @@ import logging
 
 import re
 from bs4 import BeautifulSoup
-from ContentData import WeChatArticleData
+from MODEL.ContentData import WeChatArticleData
 from datetime import datetime
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
@@ -61,3 +61,9 @@ class WeChatListParser(WeChatParser):
 
     def get_soup(self):
         return self.soup.find_all('a', uigs=re.compile('article_title_*'))
+
+    def get_article_list(self):
+        article_list = []
+        for item in self.get_soup():
+            article_list.append(item['href'])
+        return article_list

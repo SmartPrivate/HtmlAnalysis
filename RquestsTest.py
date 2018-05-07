@@ -1,12 +1,16 @@
 import logging
-import HtmlParser,HtmlLoader,Env,ContentData
+from ENV import Env
+from BLL import HtmlLoader, HtmlParser
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
-querystr=HtmlLoader.set_new_query_by_condition('英国', Env.Tsn.CustomTime, '2017-04-01', '2017-04-05')
+loader = HtmlLoader.WeChatListLoader()
+page1 = loader.load_by_condition(query='德国', tsn=Env.Tsn.CustomTime, ft='2018-04-01', et='2018-04-02', page=11)
 
-r=HtmlLoader.get_we_chat_query_url_list(querystr)
+cookie=loader.get_cookies()
 
-parser=HtmlParser.WeChatListParser(r)
-data=parser.get_soup()
-print(data)
+print(cookie)
+#parser = HtmlParser.WeChatListParser(page1)
+
+#list1 = parser.get_article_list()
+#print(list1)
