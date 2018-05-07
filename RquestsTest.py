@@ -4,13 +4,20 @@ from BLL import HtmlLoader, HtmlParser
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
+query_word = '英国'
+ft = '2018-05-01'
+et = '2018-05-07'
+
 loader = HtmlLoader.WeChatListLoader()
-page1 = loader.load_by_condition(query='德国', tsn=Env.Tsn.CustomTime, ft='2018-04-01', et='2018-04-02', page=11)
 
-cookie=loader.get_cookies()
+r = loader.load_one_page_by_condition(query=query_word, tsn=Env.Tsn.CustomTime, ft=ft, et=et, page=11)
 
-print(cookie)
-#parser = HtmlParser.WeChatListParser(page1)
+parser = HtmlParser.WeChatListParser(r.text, r.url, query_word)
+article_list = parser.get_article_list()
 
-#list1 = parser.get_article_list()
-#print(list1)
+for item in article_list:
+    loader = HtmlLoader.WeChatArticleLoader()
+    r = loader.load_by_url(item)
+    parser = HtmlParser.WeChatContentParser(r.text, r.url, query_word)
+    article = parser.assemble_model()
+    parser.save_model(article)

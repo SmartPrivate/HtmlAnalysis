@@ -4,6 +4,10 @@
       <w>asctime</w>
       <w>levelname</w>
       <w>lxml</w>
+      <w>mssql</w>
+      <w>mssqlserver</w>
+      <w>snuid</w>
+      <w>suid</w>
     </words>
   </dictionary>
 </component>

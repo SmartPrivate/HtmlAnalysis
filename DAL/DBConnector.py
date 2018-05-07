@@ -1,11 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from ENV import Env
 import logging
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
 
-engine = create_engine('mysql+mysqlconnector://root:password@localhost:3306/test')
-
-db_session = sessionmaker(bind=engine)
+def create_db_session(db_name: Env.DBName):
+    connect_str: str
+    if db_name == Env.DBName.MSSQLSERVER:
+        connect_str = Env.DBSQLServerEngine
+    elif db_name == Env.DBName.MySQL:
+        connect_str = Env.DBMySQLEngine
+    engine = create_engine(connect_str)
+    session = sessionmaker(bind=engine)
+    return session

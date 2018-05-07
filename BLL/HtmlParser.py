@@ -2,18 +2,28 @@ import logging
 
 import re
 from bs4 import BeautifulSoup
-from MODEL.ContentData import WeChatArticleData
+from MODEL.OrmData import WeChatContent
 from datetime import datetime
+from DAL import DBOperator
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
 
 class WeChatParser(object):
-    def __init__(self, request_get):
-        self.soup = BeautifulSoup(request_get, 'lxml')
+    def __init__(self, r_text: str, r_url: str=None, keyword: str='未定义'):
+        self.soup = BeautifulSoup(r_text, 'lxml')
+        self.url = r_url
+        self.keyword = keyword
 
     def get_soup(self):
         pass
+
+    def assemble_model(self):
+        pass
+
+    @staticmethod
+    def save_model(model):
+        DBOperator.db_writer(model)
 
 
 class WeChatContentParser(WeChatParser):
@@ -43,18 +53,29 @@ class WeChatContentParser(WeChatParser):
 
     def __get_article_content(self) -> str:
         result = self.soup.find_all(id='js_content')
-        return '\t'.join(result)
+        result_str_list=[]
+        for item in result:
+            item.text
+            result_str_list.append(item.text)
+        return '\t'.join(result_str_list)
 
-    def get_parsed_article(self) -> WeChatArticleData:
-        return WeChatArticleData(
-            self.__get_article_title(),
-            self.__get_origin_tag(),
-            self.__get_post_date(),
-            self.__get_post_user_name(),
-            self.__get_post_user_id(),
-            self.__get_post_user_introduction(),
-            self.__get_article_content()
-        )
+    def __get_url(self):
+        return self.url
+
+    def __get_keyword(self):
+        return self.keyword
+
+    def assemble_model(self):
+        model = WeChatContent()
+        model.Title = self.__get_article_title()
+        model.URL = self.__get_url()
+        model.Article = self.__get_article_content()
+        model.OriginTag = self.__get_origin_tag()
+        model.PostDate = self.__get_post_date()
+        model.PostUserID = self.__get_post_user_id()
+        model.PostUserName = self.__get_post_user_name()
+        model.QueryKeyword = self.__get_keyword()
+        return model
 
 
 class WeChatListParser(WeChatParser):
