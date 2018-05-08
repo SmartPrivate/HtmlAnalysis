@@ -3,6 +3,7 @@ from ENV import Env
 from BLL import HtmlLoader, HtmlParser,Antispider
 from DAL import DBOperator
 from selenium import webdriver
+from TOOL import QueryAssembler
 import requests
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -30,3 +31,6 @@ et = '2018-05-02'
 #    parser = HtmlParser.WeChatContentParser(r, query_word)
 #    article = parser.get_data()
 #    DBOperator.db_writer(article)
+
+r=QueryAssembler.we_chat_query_assembler(query=query_word,tsn=Env.Tsn.CustomTime,ft=ft,et=et)
+print(r)

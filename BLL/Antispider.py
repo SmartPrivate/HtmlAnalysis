@@ -6,7 +6,7 @@ from ENV import Env
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
 
-class SNUID_IP_Pool(object):
+class Anti_Pool(object):
     __options: webdriver.ChromeOptions
     __driver: webdriver.Chrome
     __snuid_list: [str]
@@ -31,19 +31,25 @@ class SNUID_IP_Pool(object):
             self.__snuid_list.append(resource)
 
     def __init_ip_list(self):
-        self.__ip_list=[]
+        self.__ip_list = []
 
     def __get_ip(self):
         pass
 
     def __get_snuid_suid(self):
-        self.__driver.get(Env.DomainStr)
+        self.__driver.get(Env.DomainQueryStr)
         suid = self.__driver.get_cookie('SUID')['value']
         try:
             snuid = self.__driver.get_cookie('SNUID')['value']
         except TypeError:
-            snuid = 'no_snuid'
+            ip = self.get_singleton_ip()
+            snuid = self.__get_snuid(ip)
         return suid, snuid
+
+    def __get_snuid(self, ip: Dict[str, str] = None):
+        self.__options.add_argument('--proxy-server=http://{0}'.format(ip['http']))
+        self.__driver.get(Env.DomainQueryStr)
+        return self.__driver.get_cookie('SNUID')['value']
 
     def get_singleton_snuid(self) -> Dict[str, str]:
         total = len(self.__snuid_list)
@@ -56,5 +62,5 @@ class SNUID_IP_Pool(object):
         snuid = item.split('\t')[1]
         return {'SUID': suid, 'SNUID': snuid}
 
-    def get_singleton_ip(self) -> Dict[str,str]:
+    def get_singleton_ip(self) -> Dict[str, str]:
         pass
