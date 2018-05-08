@@ -42,7 +42,7 @@
     </database>
     <schema id="13" parent="11" name="dbo">
       <ObjectId>1</ObjectId>
-      <IntrospectionTimestamp>2018-04-28.03:27:20.407</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2018-05-08.17:19:44.783</IntrospectionTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -97,49 +97,128 @@
     <table id="26" parent="13" name="T_CountriesWechatDataSource">
       <ObjectId>709577566</ObjectId>
       <CreatedTimestamp>2018-04-26.02:50:02.223</CreatedTimestamp>
-      <ModifiedTimestamp>2018-04-28.03:26:22.120</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-04-29.22:17:04.450</ModifiedTimestamp>
     </table>
-    <column id="27" parent="26" name="CountryName">
+    <table id="27" parent="13" name="T_WeChatContent">
+      <ObjectId>1525580473</ObjectId>
+      <CreatedTimestamp>2018-05-08.03:08:34.410</CreatedTimestamp>
+      <ModifiedTimestamp>2018-05-08.03:08:34.450</ModifiedTimestamp>
+    </table>
+    <column id="28" parent="26" name="CountryName">
       <Position>1</Position>
       <DataType>nvarchar(200 char)|0s</DataType>
     </column>
-    <column id="28" parent="26" name="WechatName">
+    <column id="29" parent="26" name="WechatName">
       <Position>2</Position>
       <DataType>nvarchar(200 char)|0s</DataType>
     </column>
-    <column id="29" parent="26" name="WechatID">
+    <column id="30" parent="26" name="WechatID">
       <Position>3</Position>
       <DataType>nvarchar(200 char)|0s</DataType>
     </column>
-    <column id="30" parent="26" name="Title">
+    <column id="31" parent="26" name="Title">
       <Position>4</Position>
       <DataType>nvarchar(max)|0s</DataType>
     </column>
-    <column id="31" parent="26" name="PublishTime">
+    <column id="32" parent="26" name="PublishTime">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="32" parent="26" name="URL">
+    <column id="33" parent="26" name="URL">
       <Position>6</Position>
       <DataType>nvarchar(255 char)|0s</DataType>
     </column>
-    <column id="33" parent="26" name="ReadNum">
+    <column id="34" parent="26" name="ReadNum">
       <Position>7</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="34" parent="26" name="GoodNum">
+    <column id="35" parent="26" name="GoodNum">
       <Position>8</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="35" parent="26" name="SID">
+    <column id="36" parent="26" name="SID">
       <Position>9</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="36" parent="26" name="URLText">
+    <column id="37" parent="26" name="URLText">
       <Position>10</Position>
       <DataType>nvarchar(max)|0s</DataType>
     </column>
+    <index id="38" parent="26" name="PK_id">
+      <Position>1</Position>
+      <ColNames>SID</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="39" parent="26" name="PK_id">
+      <ObjectId>1221579390</ObjectId>
+      <CreatedTimestamp>2018-04-29.22:17:04.450</CreatedTimestamp>
+      <ModifiedTimestamp>2018-04-29.22:17:04.450</ModifiedTimestamp>
+      <ColNames>SID</ColNames>
+      <UnderlyingIndexName>PK_id</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="40" parent="27" name="SID">
+      <Position>1</Position>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="41" parent="27" name="QueryKeyword">
+      <Position>2</Position>
+      <DataType>nvarchar(20 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="27" name="PostUserName">
+      <Position>3</Position>
+      <DataType>nvarchar(50 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="43" parent="27" name="PostUserID">
+      <Position>4</Position>
+      <DataType>nvarchar(50 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="44" parent="27" name="Title">
+      <Position>5</Position>
+      <DataType>nvarchar(200 char)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="45" parent="27" name="PostDate">
+      <Position>6</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="46" parent="27" name="OriginTag">
+      <Position>7</Position>
+      <DataType>bit|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="47" parent="27" name="URL">
+      <Position>8</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="48" parent="27" name="Article">
+      <Position>9</Position>
+      <DataType>nvarchar(max)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="49" parent="27" name="PK_T_WeChatContent">
+      <Position>1</Position>
+      <ColNames>SID</ColNames>
+      <Clustering>1</Clustering>
+      <Unique>1</Unique>
+    </index>
+    <key id="50" parent="27" name="PK_T_WeChatContent">
+      <ObjectId>1541580530</ObjectId>
+      <CreatedTimestamp>2018-05-08.03:08:34.443</CreatedTimestamp>
+      <ModifiedTimestamp>2018-05-08.03:08:34.443</ModifiedTimestamp>
+      <ColNames>SID</ColNames>
+      <UnderlyingIndexName>PK_T_WeChatContent</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
   </database-model>
 </dataSource>

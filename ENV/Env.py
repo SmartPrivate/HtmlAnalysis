@@ -28,9 +28,11 @@ CookieInsertDic: Dict[str, str] = {'sgid': '12-34818907-AVrvvXiaNYKtZk8vHm8NwdB8
 
 UrlEncode: str = 'utf8'
 RequestEncode: str = 'utf-8'
-DomainStr: str = 'http://weixin.sogou.com/weixin?type=2&'
-ChromeDir: str = 'E:\chromedriver\chromedriver.exe'
+DomainStr: str = 'http://weixin.sogou.com/'
+DomainQueryStr: str='http://weixin.sogou.com/weixin?type=2&'
+SogouAntiSpider: str = 'antispider'
 
+ChromeDir: str = 'E:\chromedriver\chromedriver.exe'
 DBMySQLEngine: str = 'mysql+mysqlconnector://root:password@localhost:3306/test'
 DBSQLServerEngine: str = 'mssql+pyodbc://sa:900807@192.168.22.190:1433/ContriesWechatDB?driver=ODBC+Driver+17+for+SQL+Server'
 
