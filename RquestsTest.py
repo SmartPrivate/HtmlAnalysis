@@ -4,6 +4,7 @@ from BLL import HtmlLoader, HtmlParser,Antispider
 from DAL import DBOperator
 from selenium import webdriver
 from TOOL import QueryAssembler
+from bs4 import BeautifulSoup
 import requests
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -32,5 +33,8 @@ et = '2018-05-02'
 #    article = parser.get_data()
 #    DBOperator.db_writer(article)
 
-r=QueryAssembler.we_chat_query_assembler(query=query_word,tsn=Env.Tsn.CustomTime,ft=ft,et=et)
-print(r)
+r=requests.get('http://www.xicidaili.com/nn/')
+print(r.text)
+soup=BeautifulSoup(r.text,'lxml')
+ip=soup.find_all('td')
+print(ip)

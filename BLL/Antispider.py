@@ -1,66 +1,58 @@
-from selenium import webdriver
 import logging, random
 from typing import Dict
 from ENV import Env
+import requests
+from bs4 import BeautifulSoup
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
 
 class Anti_Pool(object):
-    __options: webdriver.ChromeOptions
-    __driver: webdriver.Chrome
-    __snuid_list: [str]
-    __ip_list: [str]
+    __snuid_list: {str, str}
+    __ip_list: {str, str}
 
     def __init__(self):
-        self.__setup_chrome()
         self.__init_snuid_suid_list()
         self.__init_ip_list()
 
-    def __setup_chrome(self):
-        self.__options = webdriver.ChromeOptions()
-        self.__options.set_headless()
-        self.__options.add_argument('--disable-gpu')
-        self.__driver = webdriver.Chrome(Env.ChromeDir, options=self.__options)
-
     def __init_snuid_suid_list(self):
         self.__snuid_list = []
-        for i in range(1, 10):
-            suid, snuid = self.__get_snuid_suid()
-            resource = suid + '\t' + snuid
-            self.__snuid_list.append(resource)
+        for i in range(0, 10):
+            self.__snuid_list.append(self.__get_snuid_suid())
 
     def __init_ip_list(self):
         self.__ip_list = []
+        ip_request=requests.get('http://www.xicidaili.com/nn/1')
 
-    def __get_ip(self):
-        pass
 
     def __get_snuid_suid(self):
-        self.__driver.get(Env.DomainQueryStr)
-        suid = self.__driver.get_cookie('SUID')['value']
+        request = requests.get(Env.DomainQueryStr)
+        suid = request.cookies['SUID']
         try:
-            snuid = self.__driver.get_cookie('SNUID')['value']
+            snuid = request.cookies['SNUID']
         except TypeError:
-            ip = self.get_singleton_ip()
-            snuid = self.__get_snuid(ip)
-        return suid, snuid
+            snuid = None
+            while snuid is None:
+                snuid = self.__get_snuid()
+        return {'SUID': suid, 'SNUID': snuid}
 
-    def __get_snuid(self, ip: Dict[str, str] = None):
-        self.__options.add_argument('--proxy-server=http://{0}'.format(ip['http']))
-        self.__driver.get(Env.DomainQueryStr)
-        return self.__driver.get_cookie('SNUID')['value']
+    def __get_snuid(self):
+        ip = self.get_singleton_ip_dic()
+        try:
+            snuid_request = requests.get(Env.DomainQueryStr, proxies=ip)
+            snuid = snuid_request.cookies['SNUID']
+        except requests.exceptions.ConnectTimeout:
+            snuid = None
+        return snuid
 
-    def get_singleton_snuid(self) -> Dict[str, str]:
+    def get_singleton_snuid_dic(self) -> Dict[str, str]:
         total = len(self.__snuid_list)
         if total == 0:
             self.__init_snuid_suid_list()
         index = random.randint(0, total - 1)
-        item: str = self.__snuid_list[index]
+        item = self.__snuid_list[index]
         self.__snuid_list.pop(index)
-        suid = item.split('\t')[0]
-        snuid = item.split('\t')[1]
-        return {'SUID': suid, 'SNUID': snuid}
+        return item
 
-    def get_singleton_ip(self) -> Dict[str, str]:
+    def get_singleton_ip_dic(self) -> Dict[str, str]:
         pass
