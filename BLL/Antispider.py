@@ -12,8 +12,8 @@ class Anti_Pool(object):
     __ip_list: {str, str}
 
     def __init__(self):
-        self.__init_snuid_suid_list()
         self.__init_ip_list()
+        self.__init_snuid_suid_list()
 
     def __init_snuid_suid_list(self):
         self.__snuid_list = []
@@ -22,24 +22,36 @@ class Anti_Pool(object):
 
     def __init_ip_list(self):
         self.__ip_list = []
-        ip_request=requests.get('http://www.xicidaili.com/nn/1')
+        for i in range(1, 11):
+            self.__get_ip_list(i)
 
+    def __get_ip_list(self, i: int):
+        ip_request = requests.get(Env.IPListBaseUrl + str(i), headers=Env.AntiSpiderHeader)
+        soup = BeautifulSoup(ip_request.text, 'lxml')
+        ips = soup.find_all('tr', 'odd')
+        for item in ips:
+            small_list = item.text.split('\n')
+            if small_list[8] == 'HTTPS':
+                continue
+            self.__ip_list.append({'HTTP': small_list[2] + ':' + small_list[3]})
 
     def __get_snuid_suid(self):
-        request = requests.get(Env.DomainQueryStr)
+        request = requests.get(Env.DomainStr, headers=Env.HeaderDic)
         suid = request.cookies['SUID']
         try:
             snuid = request.cookies['SNUID']
-        except TypeError:
+        except KeyError:
             snuid = None
             while snuid is None:
-                snuid = self.__get_snuid()
+                snuid = self.__get_snuid(suid)
         return {'SUID': suid, 'SNUID': snuid}
 
-    def __get_snuid(self):
+    def __get_snuid(self, suid: str):
         ip = self.get_singleton_ip_dic()
         try:
-            snuid_request = requests.get(Env.DomainQueryStr, proxies=ip)
+            jar = requests.cookies.RequestsCookieJar()
+            jar.set('SUID',suid)
+            snuid_request = requests.get(Env.DomainStr, proxies=ip,cookies=jar,headers=Env.HeaderDic)
             snuid = snuid_request.cookies['SNUID']
         except requests.exceptions.ConnectTimeout:
             snuid = None
@@ -55,4 +67,10 @@ class Anti_Pool(object):
         return item
 
     def get_singleton_ip_dic(self) -> Dict[str, str]:
-        pass
+        total = len(self.__ip_list)
+        if total == 0:
+            self.__init_ip_list()
+        index = random.randint(0, total - 1)
+        item = self.__ip_list[index]
+        self.__ip_list.pop(index)
+        return item

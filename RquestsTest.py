@@ -13,28 +13,8 @@ ft = '2018-05-01'
 et = '2018-05-02'
 
 # 初始化list_loader
-#loader = HtmlLoader.WeChatListLoader()
-
-# 按条件搜索一页
-#r=loader.load_one_page_by_condition(query=query_word,tsn=Env.Tsn.CustomTime, ft=ft, et=et)
-#r = loader.load_all_pages_by_condition(query=query_word, tsn=Env.Tsn.CustomTime, ft=ft, et=et)
-#print(r)
-# 初始化list_parser
-#parser = HtmlParser.WeChatListParser(r)
-
-# 获取文章url列表
-#article_list = parser.get_data()
-
-# 遍历列表并解析，并将数据存入数据库
-# for item in article_list:
-#    loader = HtmlLoader.WeChatArticleLoader()
-#    r = loader.load_by_url(item)
-#    parser = HtmlParser.WeChatContentParser(r, query_word)
-#    article = parser.get_data()
-#    DBOperator.db_writer(article)
-
-r=requests.get('http://www.xicidaili.com/nn/')
+query_str=QueryAssembler.we_chat_query_assembler(query=query_word,tsn=Env.Tsn.CustomTime,ft=ft,et=et,page=11)
+loader=HtmlLoader.WeChatListLoader(query_str)
+r=loader.article_url_list
 print(r.text)
-soup=BeautifulSoup(r.text,'lxml')
-ip=soup.find_all('td')
-print(ip)
+

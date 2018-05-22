@@ -27,12 +27,13 @@ class WeChatListLoader(HtmlLoader):
 
     @property
     def article_url_list(self):
-        if Env.SogouAntiSpider in self._r:
-            ip_dic = self.__anti_spider.get_singleton_ip()
+        if Env.SogouAntiSpider in self._r.url:
+            ip_dic = self.__anti_spider.get_singleton_ip_dic()
             self._r = requests.get(self.__url, proxies=ip_dic)
+            self._r.encoding = Env.RequestEncode
         return self._r
 
-    def __load_all_pages(self,url: str):
+    def __load_all_pages(self, url: str):
         pass
 
 

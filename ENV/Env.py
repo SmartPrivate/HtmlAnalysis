@@ -26,10 +26,20 @@ CookieInsertDic: Dict[str, str] = {'sgid': '12-34818907-AVrvvXiaNYKtZk8vHm8NwdB8
                                    'pprdig': 'l5RTTxjs0_8csiNn1nk6huaul2qGKmqm8rJfSb4QpIB7Mz9aAEcBgHiebs1C7tCFkcHNYqn5YYzvPRZ6EMgqQkvdHtygoq2OH17jl21iYWWwIUqs1B_wZiZYSXhvQgsw4FgMqcGKy5tMKKW3IxRBdf7Ghw6MUpJKU3h2Gu3fdOA'
                                    }
 
+AntiSpiderHeader: Dict[str, str] = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+    'Connection': 'keep-alive',
+    'Host': 'www.xicidaili.com',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'
+}
+
 UrlEncode: str = 'utf8'
 RequestEncode: str = 'utf-8'
 DomainStr: str = 'http://weixin.sogou.com/'
-DomainQueryStr: str='http://weixin.sogou.com/weixin?type=2&'
+DomainQueryStr: str = 'http://weixin.sogou.com/weixin?type=2&'
 SogouAntiSpider: str = 'antispider'
 
 ChromeDir: str = 'E:\chromedriver\chromedriver.exe'
@@ -44,3 +54,5 @@ class DBName(Enum):
 
 
 DBNameDic: Dict[int, str] = {0: 'mysql', 1: 'mssql'}
+
+IPListBaseUrl: str = 'http://www.xicidaili.com/nn/'
