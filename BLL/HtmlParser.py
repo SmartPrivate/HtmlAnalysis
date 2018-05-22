@@ -9,7 +9,7 @@ from datetime import datetime
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
 
-class WeChatParser(object):
+class HtmlParser(object):
     def __init__(self, r: Response):
         self._soup = BeautifulSoup(r.text, 'lxml')
 
@@ -20,7 +20,7 @@ class WeChatParser(object):
         pass
 
 
-class WeChatContentParser(WeChatParser):
+class WeChatContentParser(HtmlParser):
     def __init__(self, r: Response, keyword: str):
         super().__init__(r)
         self.keyword = keyword
@@ -77,7 +77,7 @@ class WeChatContentParser(WeChatParser):
         return model
 
 
-class WeChatListParser(WeChatParser):
+class WeChatListParser(HtmlParser):
 
     def search_soup(self):
         return self._soup.find_all('a', uigs=re.compile('article_title_*'))
@@ -88,6 +88,7 @@ class WeChatListParser(WeChatParser):
             article_list.append(item['href'])
         return article_list
 
-    def get_article_count(self):
+    @property
+    def article_count(self):
         count = self._soup.find('div', 'mun').text[3:-3].replace(',', '')
         return int(count)

@@ -20,29 +20,16 @@ HeaderDic: Dict[str, str] = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'
 }
 
-CookieInsertDic: Dict[str, str] = {'sgid': '12-34818907-AVrvvXiaNYKtZk8vHm8NwdB8',
-                                   'ppinf': '5|1525671531|1526881131|dHJ1c3Q6MToxfGNsaWVudGlkOjQ6MjAxN3x1bmlxbmFtZTo0OkFsZXh8Y3J0OjEwOjE1MjU2NzE1MzF8cmVmbmljazo0OkFsZXh8dXNlcmlkOjQ0Om85dDJsdU5BYVZuS0VkckFidGp2MTlheG9XNTRAd2VpeGluLnNvaHUuY29tfA; pprdig=l5RTTxjs0_8csiNn1nk6huaul2qGKmqm8rJfSb4QpIB7Mz9aAEcBgHiebs1C7tCFkcHNYqn5YYzvPRZ6EMgqQkvdHtygoq2OH17jl21iYWWwIUqs1B_wZiZYSXhvQgsw4FgMqcGKy5tMKKW3IxRBdf7Ghw6MUpJKU3h2Gu3fdOA',
-                                   'ppmdig': '15256715310000008ef982f3da6a02706f21a16bfec56df6',
-                                   'pprdig': 'l5RTTxjs0_8csiNn1nk6huaul2qGKmqm8rJfSb4QpIB7Mz9aAEcBgHiebs1C7tCFkcHNYqn5YYzvPRZ6EMgqQkvdHtygoq2OH17jl21iYWWwIUqs1B_wZiZYSXhvQgsw4FgMqcGKy5tMKKW3IxRBdf7Ghw6MUpJKU3h2Gu3fdOA'
-                                   }
-
-AntiSpiderHeader: Dict[str, str] = {
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-    'Accept-Encoding': 'gzip, deflate',
-    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-    'Connection': 'keep-alive',
-    'Host': 'www.xicidaili.com',
-    'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'
-}
+RequestCookieDic: Dict[str, str] = dict(
+    ppinf='5|1526963435|1528173035|dHJ1c3Q6MToxfGNsaWVudGlkOjQ6MjAxN3x1bmlxbmFtZTo0OkFsZXh8Y3J0OjEwOjE1MjY5NjM0MzV8cmVmbmljazo0OkFsZXh8dXNlcmlkOjQ0Om85dDJsdU5BYVZuS0VkckFidGp2MTlheG9XNTRAd2VpeGluLnNvaHUuY29tfA',
+    pprdig='naiDGgEBWwMVxjaoXfAp6-2dFKPm-lCLMf4Ek6GmAmS-izf0arUClGvDWbu50KEdQk4wGxCnxxCuSvXCo5jmmnnlBY5OEFzG3GrB4lDWT4GKeQWZJA5Ro5-ayVqJobY5c5jNkJqFUU2F_CNLGfP2DRecMAAwMSbXVhVOQYLbnSY',
+    sgid='12-34818907-AVsDnOshdiaabbbq4mSmQKlY; ppmdig=15269634370000007c2d14be73fbee1523a81932a9080a02')
 
 UrlEncode: str = 'utf8'
 RequestEncode: str = 'utf-8'
 DomainStr: str = 'http://weixin.sogou.com/'
 DomainQueryStr: str = 'http://weixin.sogou.com/weixin?type=2&'
-SogouAntiSpider: str = 'antispider'
 
-ChromeDir: str = 'E:\chromedriver\chromedriver.exe'
 DBMySQLEngine: str = 'mysql+mysqlconnector://root:password@localhost:3306/test'
 DBSQLServerEngine: str = 'mssql+pyodbc://sa:900807@192.168.22.190:1433/ContriesWechatDB?driver=ODBC+Driver+17+for+SQL+Server'
 
@@ -56,3 +43,17 @@ class DBName(Enum):
 DBNameDic: Dict[int, str] = {0: 'mysql', 1: 'mssql'}
 
 IPListBaseUrl: str = 'http://www.xicidaili.com/nn/'
+
+AntiSpiderHeader: Dict[str, str] = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+    'Connection': 'keep-alive',
+    'Host': 'www.xicidaili.com',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'
+}
+
+AntiSpiderCookie: Dict[str, str] = dict(
+    _free_proxy_session='BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJTYxNDJkNjEwMjVjZWU4ODE1ODVjMDVmNjVjZDRiNmY2BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMWE5bTljZG53R0pTRldkWTA0QURkNXJ4aDE3d2xhTllqWjlGbFloRmYwK2c9BjsARg%3D%3D--c38116161c233f4f0b224d70a0cfe76920eac477',
+    Hm_lvt_0cf76c77469e965d2957f0553e6ecf59='1526966022', Hm_lpvt_0cf76c77469e965d2957f0553e6ecf59='1526966414')

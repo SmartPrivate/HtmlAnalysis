@@ -1,20 +1,19 @@
 import logging
 from ENV import Env
-from BLL import HtmlLoader, HtmlParser,Antispider
-from DAL import DBOperator
-from selenium import webdriver
+from BLL import HtmlLoader, HtmlParser
 from TOOL import QueryAssembler
-from bs4 import BeautifulSoup
-import requests
+
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
-query_word = '中国'
+query_word = '安哥拉'
 ft = '2018-05-01'
-et = '2018-05-02'
+et = '2018-05-01'
 
-# 初始化list_loader
-query_str=QueryAssembler.we_chat_query_assembler(query=query_word,tsn=Env.Tsn.CustomTime,ft=ft,et=et,page=11)
-loader=HtmlLoader.WeChatListLoader(query_str)
-r=loader.article_url_list
-print(r.text)
-
+url = QueryAssembler.we_chat_query_assembler(query=query_word, tsn=Env.Tsn.CustomTime, ft=ft, et=et)
+loader = HtmlLoader.WeChatListLoader(url, load_all_pages=True)
+for item in loader.get_response_list():
+    if item is not None:
+        parser = HtmlParser.WeChatListParser(item)
+        url_list = parser.get_data()
+        for url in url_list:
+            print(url)
