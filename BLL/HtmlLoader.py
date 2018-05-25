@@ -14,8 +14,19 @@ class HtmlLoader(object):
         self._url = url
 
     def _get_response(self, url, cookies=None, headers=None, proxies=None):
-        self._r = requests.get(url=url, headers=headers, cookies=cookies, proxies=proxies, timeout=5)
-        self._r.encoding = Env.RequestEncode
+        retry = 0
+        while True:
+            if retry < Env.RetryCount:
+                try:
+                    self._r = requests.get(url=url, headers=headers, cookies=cookies, proxies=proxies,
+                                           timeout=Env.TimeOut)
+                    self._r.encoding = Env.RequestEncode
+                except requests.exceptions.ReadTimeout:
+                    retry = retry + 1
+                    continue
+            else:
+                print('以重试{0}次，始终TimeOut，请检查网络连接状况！'.format(str(Env.TimeOut)))
+                self._r = None
 
 
 class WeChatListLoader(HtmlLoader):
@@ -41,19 +52,6 @@ class WeChatListLoader(HtmlLoader):
             self.load_one_page(page=i)
             __response_list.append(self._r)
             time.sleep(random.randint(10, 30))
-        '''
-             while True:
-                try:
-                    proxies = anti_spider.get_singleton_ip_dic()
-                    r = requests.get(url, headers=Env.HeaderDic, cookies=Env.RequestCookieDic, proxies=proxies,
-                                     timeout=5)
-                    self.__response_list.append(r)
-                    time.sleep(3)
-                except requests.exceptions.ProxyError:
-                    continue
-                except requests.exceptions.Timeout:
-                    continue
-        '''
         return __response_list
 
 

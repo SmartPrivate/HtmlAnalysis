@@ -3,7 +3,6 @@ from ENV import Env
 from BLL import HtmlLoader, HtmlParser
 from TOOL import QueryAssembler
 from DAL import DBOperator
-from MODEL import OrmData
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -15,6 +14,8 @@ url = QueryAssembler.we_chat_query_assembler(query=query_word, tsn=Env.Tsn.Custo
 loader = HtmlLoader.WeChatListLoader(url)
 r_list = loader.load_all_pages()
 for r in r_list:
+    if r is None:
+        continue
     list_parser = HtmlParser.WeChatListParser(r)
     url_list = list_parser.get_data()
     for url in url_list:
