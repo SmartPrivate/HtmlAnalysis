@@ -15,7 +15,7 @@ class Tsn(Enum):
     CustomTime = 5
 
 
-HeaderDic: Dict[str, str] = {
+RequestHeaderDic: Dict[str, str] = {
     'Referer': 'http://weixin.sogou.com/weixin?type=2&s_from=input&query=%E7%BE%8E%E5%9B%BD&ie=utf8&_sug_=n&_sug_type_=',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'
 }
@@ -30,7 +30,7 @@ RequestEncode: str = 'utf-8'
 DomainStr: str = 'http://weixin.sogou.com/'
 DomainQueryStr: str = 'http://weixin.sogou.com/weixin?type=2&'
 
-DBMySQLEngine: str = 'mysql+mysqlconnector://root:password@localhost:3306/test'
+DBMySQLEngine: str = 'mysql+mysqlconnector://dbuser:Mc2460022.@192.168.22.197:3306/mysql'
 DBSQLServerEngine: str = 'mssql+pyodbc://sa:900807@192.168.22.190:1433/ContriesWechatDB?driver=ODBC+Driver+17+for+SQL+Server'
 
 
@@ -44,16 +44,4 @@ DBNameDic: Dict[int, str] = {0: 'mysql', 1: 'mssql'}
 
 IPListBaseUrl: str = 'http://www.xicidaili.com/nn/'
 
-AntiSpiderHeader: Dict[str, str] = {
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-    'Accept-Encoding': 'gzip, deflate',
-    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-    'Connection': 'keep-alive',
-    'Host': 'www.xicidaili.com',
-    'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'
-}
-
-AntiSpiderCookie: Dict[str, str] = dict(
-    _free_proxy_session='BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJTYxNDJkNjEwMjVjZWU4ODE1ODVjMDVmNjVjZDRiNmY2BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMWE5bTljZG53R0pTRldkWTA0QURkNXJ4aDE3d2xhTllqWjlGbFloRmYwK2c9BjsARg%3D%3D--c38116161c233f4f0b224d70a0cfe76920eac477',
-    Hm_lvt_0cf76c77469e965d2957f0553e6ecf59='1526966022', Hm_lpvt_0cf76c77469e965d2957f0553e6ecf59='1526966414')
+ChromeDir: str = r'E:\chromedriver\chromedriver.exe'

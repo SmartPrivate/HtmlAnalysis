@@ -2,6 +2,7 @@
   <dictionary name="macha">
     <words>
       <w>asctime</w>
+      <w>chromedriver</w>
       <w>levelname</w>
       <w>lxml</w>
       <w>mssql</w>
@@ -9,6 +10,7 @@
       <w>snuid</w>
       <w>sogou</w>
       <w>suid</w>
+      <w>tablename</w>
     </words>
   </dictionary>
 </component>

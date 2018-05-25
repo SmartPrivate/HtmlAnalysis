@@ -1,23 +1,23 @@
 import logging
-import requests
+import requests.exceptions
+from BLL import HtmlParser
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import ActionChains
+from ENV import Env
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
-r = requests.get('https://www.kuaidaili.com/free/inha/1')
-soup = BeautifulSoup(r.text, 'lxml')
-ips = soup.tbody.find_all('tr')
-ip_list = []
-for item in ips:
-    ip = item.text.split('\n')
-    ip_list.append(ip[1] + ':' + ip[2])
-
 HeaderDic = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36',
+    'Referer': 'http://weixin.sogou.com/weixin?type=2&ie=utf8&query=%E7%BE%8E%E5%9B%BD%E9%98%9F%E9%95%BF&tsn=5&ft=2018-05-01&et=2018-05-02&interation=&wxid=&usip='
 }
 
-pro = {'http': 'socks5://127.0.0.1:1080'}
-print(pro)
-req = requests.get('http://www.google.com', proxies=pro)
-req.encoding = 'utf-8'
-print(req.text)
+url = 'https://mp.weixin.qq.com/s?src=11&timestamp=1527233406&ver=897&signature=oog4efCHKPMaEPmpIVndNVKoaF6PyVFakY4n711GbHCSq2pGDtv-bcUgmXie7GE-flfDctv5Qpy6twSJEialNP*TzDqf8Ktu8YwJAwU*TA9PQeLAhWk3OoyLow4rpb9I&new=1'
+
+r = requests.get(url)
+r.encoding = 'utf-8'
+parser = HtmlParser.WeChatContentParser(r, '美国队长')
+model=parser.get_data()
+print(model.PostDate)

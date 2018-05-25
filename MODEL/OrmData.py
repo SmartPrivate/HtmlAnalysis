@@ -1,4 +1,4 @@
-from sqlalchemy import Column, NVARCHAR, Integer, TEXT, DATETIME,BOOLEAN
+from sqlalchemy import Column, NVARCHAR, Integer, TEXT, DATETIME, BOOLEAN
 from sqlalchemy.ext.declarative import declarative_base
 
 import logging
@@ -21,3 +21,21 @@ class WeChatContent(Base):
     URL = Column(TEXT)
     Article = Column(TEXT)
 
+
+class IpPoolContent(Base):
+    __tablename__ = 'T_IPPool'
+
+    SID = Column(Integer, primary_key=True)
+    IP = Column(NVARCHAR(20))
+    PORT = Column(Integer)
+    IPArea = Column(NVARCHAR(20))
+    IPModel = Column(NVARCHAR(5))
+    IPType = Column(NVARCHAR(5))
+
+
+class SNUIDPoolContent(Base):
+    __tablename__ = 'T_SNUIDPool'
+
+    SID = Column(Integer, primary_key=True)
+    SUID = Column(NVARCHAR(50))
+    SNUID = Column(NVARCHAR(50))
