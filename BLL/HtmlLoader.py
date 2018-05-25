@@ -21,11 +21,12 @@ class HtmlLoader(object):
                     self._r = requests.get(url=url, headers=headers, cookies=cookies, proxies=proxies,
                                            timeout=Env.TimeOut)
                     self._r.encoding = Env.RequestEncode
+                    break
                 except requests.exceptions.ReadTimeout:
                     retry = retry + 1
                     continue
             else:
-                print('以重试{0}次，始终TimeOut，请检查网络连接状况！'.format(str(Env.TimeOut)))
+                print('已重试{0}次，始终TimeOut，请检查网络连接状况！'.format(str(Env.TimeOut)))
                 self._r = None
 
 

@@ -14,10 +14,8 @@ HeaderDic = {
     'Referer': 'http://weixin.sogou.com/weixin?type=2&ie=utf8&query=%E7%BE%8E%E5%9B%BD%E9%98%9F%E9%95%BF&tsn=5&ft=2018-05-01&et=2018-05-02&interation=&wxid=&usip='
 }
 
-url = 'https://mp.weixin.qq.com/s?src=11&timestamp=1527233406&ver=897&signature=oog4efCHKPMaEPmpIVndNVKoaF6PyVFakY4n711GbHCSq2pGDtv-bcUgmXie7GE-flfDctv5Qpy6twSJEialNP*TzDqf8Ktu8YwJAwU*TA9PQeLAhWk3OoyLow4rpb9I&new=1'
+url = 'http://weixin.sogou.com/weixin?type=2&ie=utf8&query=%E7%BE%8E%E5%9B%BD&tsn=5&ft=2018-05-25&et=2018-05-25&interation=&wxid=&usip='
 
-r = requests.get(url)
+r = requests.get(url,headers=HeaderDic)
 r.encoding = 'utf-8'
-parser = HtmlParser.WeChatContentParser(r, '美国队长')
-model=parser.get_data()
-print(model.PostDate)
+print(r.text)

@@ -30,7 +30,7 @@ RequestEncode: str = 'utf-8'
 DomainStr: str = 'http://weixin.sogou.com/'
 DomainQueryStr: str = 'http://weixin.sogou.com/weixin?type=2&'
 TimeOut: int = 10
-RetryCount: int=5
+RetryCount: int = 5
 
 DBMySQLEngine: str = 'mysql+mysqlconnector://dbuser:Mc2460022.@192.168.22.197:3306/mysql'
 DBSQLServerEngine: str = 'mssql+pyodbc://sa:900807@192.168.22.190:1433/ContriesWechatDB?driver=ODBC+Driver+17+for+SQL+Server'
