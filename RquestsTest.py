@@ -6,8 +6,8 @@ from DAL import DBOperator
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
-query_word = '美国队长'
-ft = '2018-05-25'
+query_word = '韩国'
+ft: str = '2018-05-25'
 et = '2018-05-25'
 
 url = QueryAssembler.we_chat_query_assembler(query=query_word, tsn=Env.Tsn.CustomTime, ft=ft, et=et)

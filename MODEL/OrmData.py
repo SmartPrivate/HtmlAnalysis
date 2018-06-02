@@ -39,3 +39,29 @@ class SNUIDPoolContent(Base):
     SID = Column(Integer, primary_key=True)
     SUID = Column(NVARCHAR(50))
     SNUID = Column(NVARCHAR(50))
+
+
+class SoftwareCopyrightContent(Base):
+    __tablename__ = 'T_SoftwareCopyright'
+
+    SID = Column(Integer, primary_key=True)
+    URL = Column(NVARCHAR(100))
+    CopyrightName = Column(NVARCHAR(100))
+    CopyrightID = Column(NVARCHAR(20))
+    CompanyName = Column(NVARCHAR(100))
+    RegistrationDate = Column(DATETIME)
+    Notes = Column(TEXT)
+
+
+class SoftwareCopyrightDateUrlContent(Base):
+    __tablename__ = 'T_SoftwareCopyrightDateUrl'
+
+    SID = Column(Integer, primary_key=True)
+    DateURL = Column(NVARCHAR(50))
+
+
+class UserAgentContent(Base):
+    __tablename__ = 'D_UserAgent'
+
+    SID = Column(Integer, primary_key=True)
+    UserAgent = Column(TEXT)

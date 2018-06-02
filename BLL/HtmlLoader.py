@@ -4,6 +4,8 @@ from BLL import HtmlParser
 import requests.exceptions
 import time
 import random
+from DAL import DBOperator
+from MODEL import OrmData
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -28,6 +30,7 @@ class HtmlLoader(object):
             else:
                 print('已重试{0}次，始终TimeOut，请检查网络连接状况！'.format(str(Env.TimeOut)))
                 self._r = None
+            return self._r
 
 
 class WeChatListLoader(HtmlLoader):
@@ -60,3 +63,19 @@ class WeChatArticleLoader(HtmlLoader):
     def load_one_article_page(self):
         self._get_response(self._url)
         return self._r
+
+
+class SoftwareCopyrightListLoader(HtmlLoader):
+
+    def __init__(self, url):
+        super().__init__(url)
+
+    @property
+    def __get_one_user_agent(self):
+        user_agents = DBOperator.db_select_user_agent()
+        user_agent_count = len(user_agents)
+        user_agent = user_agents[random.randint(user_agent_count)].UserAgent
+        return {'User-Agent': user_agent}
+
+    def get_one_date_page_url_list(self):
+        self._get_response(self._url, headers=self.__get_one_user_agent)

@@ -120,3 +120,8 @@ class WeChatListParser(HtmlParser):
     def article_count(self):
         count = self._soup.find('div', 'mun').text[3:-3].replace(',', '')
         return int(count)
+
+
+class SoftwareCopyrightListParser(HtmlParser):
+    def _search_soup(self):
+        pass

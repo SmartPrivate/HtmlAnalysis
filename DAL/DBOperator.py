@@ -29,3 +29,17 @@ def db_select_snuid() -> [OrmData.SNUIDPoolContent]:
     new_session = db_session()
     snuid_pool = new_session.query(OrmData.SNUIDPoolContent)
     return snuid_pool
+
+
+def db_select_date_list_url() -> [OrmData.SoftwareCopyrightDateUrlContent]:
+    db_session: sessionmaker = DBConnector.create_db_session(Env.DBName.MSSQLSERVER)
+    new_session = db_session()
+    date_url = new_session.query(OrmData.SoftwareCopyrightDateUrlContent).all()
+    return date_url
+
+
+def db_select_user_agent():
+    db_session: sessionmaker = DBConnector.create_db_session(Env.DBName.MSSQLSERVER)
+    new_session = db_session()
+    user_agent_model = new_session.query(OrmData.UserAgentContent).all()
+    return user_agent_model
