@@ -1,24 +1,39 @@
-import logging, time, random
+import logging
+import datetime
 from ENV import Env
-from BLL import HtmlLoader, HtmlParser
-import requests
-from bs4 import BeautifulSoup
-from lxml import etree
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from DAL import DBOperator
 from MODEL import OrmData
-import re
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
-one_day_url = 'http://www.ipyear.cn/copyright/list_20161121.html'
-host_url = 'http://www.ipyear.cn'
+proxy=DBOperator.db_select_ip_address()
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument('--proxy-server={}'.format(proxy))
+driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=Env.ChromeDir)
 
-reader = open('2016.html', 'r')
-page = reader.read()
-soup = BeautifulSoup(page, 'lxml')
+one_day_url_list = DBOperator.db_select_date_list_url()[171:300]
+for item in one_day_url_list:
+    driver.get(item.DateURL)
+    date_str = driver.find_element_by_xpath('//*[@id="content"]/div/div/div[1]/div[1]/ul/li[3]/a').text
+    date = datetime.datetime.strptime(date_str, '%Y年%m月%d日')
+    for i in range(1, 21):
+        copyright_id = driver.find_element_by_xpath(
+            '//*[@id="content"]/div/div/div[1]/div[3]/ul/li[{0}]/span'.format(i)).text
+        element = driver.find_element_by_xpath('//*[@id="content"]/div/div/div[1]/div[3]/ul/li[{0}]/a'.format(i))
+        url = element.get_attribute('href')
+        company_name_and_software_name = element.text.split(' ')
+        company_name = company_name_and_software_name[0]
+        software_name = company_name_and_software_name[2]
+        model = OrmData.SoftwareCopyrightContent()
+        model.CompanyName = company_name
+        model.CopyrightID = copyright_id
+        model.CopyrightName = software_name
+        model.URL = url
+        # temp_str = company_name + ',' + software_name + ',' + url + ',' + copyright_id + ',' + date_str + '\n'
+        model.RegistrationDate = date
+        DBOperator.db_writer(model)
 
-date: str = soup.title.text.split('_')[0]
-date = date.replace('\n', '').replace('\t', '')
-print(date)

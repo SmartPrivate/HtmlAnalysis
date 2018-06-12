@@ -125,9 +125,8 @@ class WeChatListParser(HtmlParser):
 
 class SoftwareCopyrightListParser(HtmlParser):
     def write_software_copyright_info_to_db(self):
-        date: str = self._soup.title.text.split('_')[0].replace('\n', '').replace('\t', '')
+        date: str = self._soup.title.text.split('_')[0].replace('\n', '').replace('\t', '').replace('\r','')
         for item in self._soup.find('div', 'news_college_list').find_all('li'):
-
             copyright_id = item.find('span', 'date').text
             detail_url = item.find('a')
             url = Env.SoftwareCopyrightHostUrl + detail_url['href']
@@ -139,4 +138,5 @@ class SoftwareCopyrightListParser(HtmlParser):
             model.CopyrightID = copyright_id
             model.CopyrightName = copyright_name
             model.URL = url
-            model.RegistrationDate=datetime.strptime()
+            model.RegistrationDate = datetime.strptime(date)
+

@@ -1,5 +1,5 @@
 import logging
-
+import random
 from sqlalchemy.orm import sessionmaker
 
 from DAL import DBConnector
@@ -10,18 +10,19 @@ logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=loggin
 
 
 def db_writer(model: object):
-    db_session: sessionmaker = DBConnector.create_db_session(Env.DBName.MySQL)
+    db_session: sessionmaker = DBConnector.create_db_session(Env.DBName.MSSQLSERVER)
     new_session = db_session()
     new_session.add(model)
     new_session.commit()
     new_session.close()
 
 
-def db_select_ip_address() -> [OrmData.IpPoolContent]:
+def db_select_ip_address():
     db_session: sessionmaker = DBConnector.create_db_session(Env.DBName.MSSQLSERVER)
     new_session = db_session()
-    ip_pool = new_session.query(OrmData.IpPoolContent)
-    return ip_pool
+    ip_pool = new_session.query(OrmData.IpPoolContent).all()
+    singleton=ip_pool[random.randint(0, len(ip_pool))]
+    return singleton.IP+':'+str(singleton.PORT)
 
 
 def db_select_snuid() -> [OrmData.SNUIDPoolContent]:

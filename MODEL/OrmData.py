@@ -23,14 +23,10 @@ class WeChatContent(Base):
 
 
 class IpPoolContent(Base):
-    __tablename__ = 'T_IPPool'
-
+    __tablename__ = 'D_IPPool'
     SID = Column(Integer, primary_key=True)
     IP = Column(NVARCHAR(20))
     PORT = Column(Integer)
-    IPArea = Column(NVARCHAR(20))
-    IPModel = Column(NVARCHAR(5))
-    IPType = Column(NVARCHAR(5))
 
 
 class SNUIDPoolContent(Base):

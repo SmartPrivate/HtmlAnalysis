@@ -30,14 +30,14 @@ class HtmlLoader(object):
             else:
                 print('已重试{0}次，始终TimeOut，请检查网络连接状况！'.format(str(Env.TimeOut)))
                 self._r = None
-            return self._r
+        return self._r
 
 
 class WeChatListLoader(HtmlLoader):
 
     def __init__(self, url: str):
         super().__init__(url)
-        self.__article_count=self.article_count
+        self.__article_count = self.article_count
 
     def load_one_page(self, page) -> requests.Response:
         one_page_url = '{0}&page={1}'.format(self._url, str(page))
@@ -87,11 +87,9 @@ class SoftwareCopyrightListLoader(HtmlLoader):
     def __get_one_user_agent(self):
         user_agents = DBOperator.db_select_user_agent()
         user_agent_count = len(user_agents)
-        user_agent = user_agents[random.randint(user_agent_count)].UserAgent
+        index = random.randint(0,user_agent_count)
+        user_agent = user_agents[index].UserAgent
         return {'User-Agent': user_agent}
 
     def get_one_date_page_url_list(self):
-        self._get_response(self._url, headers=self.__get_one_user_agent)
-        parser=HtmlParser.SoftwareCopyrightListParser(self._r)
-        soup=parser.get_data()
-
+        return self._get_response(self._url, headers=self.__get_one_user_agent)
