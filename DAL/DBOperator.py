@@ -10,7 +10,7 @@ logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=loggin
 
 
 def db_writer(model: object):
-    db_session: sessionmaker = DBConnector.create_db_session(Env.DBName.MSSQLSERVER)
+    db_session: sessionmaker = DBConnector.create_db_session(Env.DBName.MySQL)
     new_session = db_session()
     new_session.add(model)
     new_session.commit()

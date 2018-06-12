@@ -9,6 +9,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver import ActionChains
 from ENV import Env
+from MODEL import OrmData
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -123,5 +124,19 @@ class WeChatListParser(HtmlParser):
 
 
 class SoftwareCopyrightListParser(HtmlParser):
-    def _search_soup(self):
-        pass
+    def write_software_copyright_info_to_db(self):
+        date: str = self._soup.title.text.split('_')[0].replace('\n', '').replace('\t', '')
+        for item in self._soup.find('div', 'news_college_list').find_all('li'):
+
+            copyright_id = item.find('span', 'date').text
+            detail_url = item.find('a')
+            url = Env.SoftwareCopyrightHostUrl + detail_url['href']
+            company_texts = detail_url.text.split(' ')
+            company_name = company_texts[0]
+            copyright_name = company_texts[-1]
+            model = OrmData.SoftwareCopyrightContent()
+            model.CompanyName = company_name
+            model.CopyrightID = copyright_id
+            model.CopyrightName = copyright_name
+            model.URL = url
+            model.RegistrationDate=datetime.strptime()

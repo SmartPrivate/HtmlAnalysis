@@ -35,6 +35,10 @@ class HtmlLoader(object):
 
 class WeChatListLoader(HtmlLoader):
 
+    def __init__(self, url: str):
+        super().__init__(url)
+        self.__article_count=self.article_count
+
     def load_one_page(self, page) -> requests.Response:
         one_page_url = '{0}&page={1}'.format(self._url, str(page))
         if page <= 10:
@@ -42,6 +46,9 @@ class WeChatListLoader(HtmlLoader):
         else:
             self._get_response(one_page_url, headers=Env.RequestHeaderDic, cookies=Env.RequestCookieDic)
         return self._r
+
+    def load_30_pages(self):
+        pass
 
     def load_all_pages(self) -> [requests.Response]:
         """
@@ -57,6 +64,12 @@ class WeChatListLoader(HtmlLoader):
             __response_list.append(self._r)
             time.sleep(random.randint(10, 30))
         return __response_list
+
+    @property
+    def article_count(self):
+        self.load_one_page(1)
+        parser = HtmlParser.WeChatListParser(self._r)
+        return parser.article_count
 
 
 class WeChatArticleLoader(HtmlLoader):
@@ -79,3 +92,6 @@ class SoftwareCopyrightListLoader(HtmlLoader):
 
     def get_one_date_page_url_list(self):
         self._get_response(self._url, headers=self.__get_one_user_agent)
+        parser=HtmlParser.SoftwareCopyrightListParser(self._r)
+        soup=parser.get_data()
+

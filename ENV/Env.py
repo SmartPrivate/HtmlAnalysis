@@ -32,7 +32,7 @@ DomainQueryStr: str = 'http://weixin.sogou.com/weixin?type=2&'
 TimeOut: int = 10
 RetryCount: int = 5
 
-DBMySQLEngine: str = 'mysql+mysqlconnector://dbuser:Mc2460022.@192.168.22.197:3306/mysql'
+DBMySQLEngine: str = 'mysql+mysqlconnector://root:900807@1localhost:3306/ContriesWechatDB'
 DBSQLServerEngine: str = 'mssql+pyodbc://sa:Alex19900807.@192.168.22.197:1433/AlexDB?driver=ODBC+Driver+17+for+SQL+Server'
 
 
@@ -46,7 +46,6 @@ DBNameDic: Dict[int, str] = {0: 'mysql', 1: 'mssql'}
 
 IPListBaseUrl: str = 'http://www.xicidaili.com/nn/'
 
-ChromeDir: str = r'E:\chromedriver\chromedriver.exe'
+SoftwareCopyrightHostUrl: str = 'http://www.ipyear.cn'
 
-SoftwareCopyrightHeader: Dict[str, str] = {'Referer': 'http://www.ipyear.cn/copyright/list_20161121.html',
-                                           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36'}
+ChromeDir: str = r'E:\chromedriver\chromedriver.exe'
